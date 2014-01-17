@@ -1,0 +1,175 @@
+/**
+ * This class prints out a genealogy. Tthe genealogy is
+ * initialized using a recursive definition. Class Node is package
+ * protected and consists of the individual's name and pointers to
+ * the nodes for his or her father and mother.
+ * 
+ * By Rona R.
+**/
+
+
+
+class Node 
+{	
+	int id;    
+	String name, details;
+    	Node father, mother;
+	Node(){}
+    	
+
+	//Class Node's constructor
+
+	Node(int id, String name, Node father, Node mother, String details) 
+	{	
+		this.id = id;
+        	this.name = name;
+        	this.father = father;
+        	this.mother = mother;
+		this.details = details;
+    	}
+
+
+	//method to print out the genealogy list.
+	
+	void print1(int indent)
+	{
+        	if(father!= null) 
+			father.print1(indent-1); 		// moves over one column
+        	
+		for(int i = 0; i<indent; i++)
+			System.out.print("    ");
+        	
+		System.out.println(id + " " + name + " " + details);
+        	
+		if(mother != null) 
+			mother.print1(indent - 1);
+	}
+
+
+	//method to get a name from user and return it.
+
+	String getname()
+	{	
+		//Get a name from the user.
+
+		System.out.println("Please Enter A Name ");
+		
+
+		//Store the name input by the user, in the variable "inputname".
+
+		String inputname;
+		inputname = TextIO.getlnWord();
+		
+		return inputname;
+	}
+	
+
+	//method to let the user select a person.
+
+	void find(String[] personarray, String inputname)
+	{
+			/*Searches the array personarray for a name .  
+			Postcondition:  If name is not in the array, -1 is returned.*/
+		
+
+		for (int index = 0; index < personarray.length; index++) 
+		{
+			if (inputname.equals(personarray[index])) 
+			{
+					// the object has been found at this index!
+					//display found person's ID number.
+
+				System.out.println("ID Number :	" + index);
+				System.out.println("Name : 		"  	+  personarray[index]);
+				System.out.println("Identifying Details: " +  details);
+			}
+
+		}//end of for.
+
+ 	 }//end of method.
+	
+
+
+	//Get an integer from the user and return it.
+
+	int selectperson()
+	{		
+			System.out.println("Please Enter An ID Number: ");
+
+			int inputnumber;
+			inputnumber = TextIO.getlnInt();
+	
+			return inputnumber;
+
+	}//end of method selectperson.	
+	
+
+	public void setperson(int inputnumber)
+	{	
+		if(id == inputnumber)	
+			this.print1(3);
+
+        	if(father!= null) 
+			father.setperson(inputnumber); // moves over one column
+
+        	if(mother!=null) 
+			mother.setperson(inputnumber);
+	}
+
+}//end of class Node.
+
+
+
+public class Genealogy {
+
+	//calling Node's constructor
+
+   	 static Node root 	=  	new Node(7,"Rona",
+        new Node(3,"Abdulrahman",
+            new Node(1,"Abdulghafar",
+                new Node(0,"Abdulsatar",null,null," Brown Hair"),
+                new Node(2,"Fatema",null,null," Black Hair")," Dark Hair"),
+            new Node(5,"Sahebsultan",
+                new Node(4,"Muhammadamin",null,null," Gray Eyes"),
+                new Node(6,"Fatema",null,null," Green Eyes")," Brown Eyes")," Black Eyes"),
+
+        new Node(11,"Husna",
+            new Node(9,"Muhammadtaher",
+                new Node(8,"Muhammadumar",null,null," Blue Eyes"),
+                new Node(10,"Amena",null,null," Red Hair")," Blond Hair"),
+            new Node(13,"Kawkabsultan",
+                new Node(12,"Muhammadsarwar",null,null," White Skin"),
+                new Node(14,"Halima",null,null," Tall")," Dark Skin")," Brown Skin")," Short");
+
+   
+ public static void main(String[] args) 
+	{
+		//an array to store the name strings
+
+		String[] personarray =  {" Abdulsatar"," Abdulghafar",
+		" Fatema"," Abdulrahman"," Muhammadamin"," Sahebsultan",
+		" Fatema"," Rona"," Muhammadumar"," Muhammadtaher"," Amena",
+		" Husna"," Muhammadsarwar"," Kawkabsultan"," Halima"};
+		
+
+		//method calls.
+		
+		System.out.println("*** Welcome To The Genealogy Program ***");
+		
+		root.print1(3);
+		root.find (personarray, root.getname());
+		
+		System.out.println ("	1.	Display Ancestors");
+		System.out.println ("	2.	Display Children");
+		System.out.println ("	Please Enter Your Choice: ");
+		
+		int entry;
+		entry = TextIO.getlnInt();
+		
+		entry = 1; 
+		root.setperson(root.selectperson()) ;
+
+	}//end of main method. 
+	
+	
+}//end of class Genealogy.	    	
